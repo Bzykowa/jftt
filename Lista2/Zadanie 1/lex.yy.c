@@ -739,12 +739,12 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 11 "scan1.l"
-printf(" ");
+fprintf(yyout," ");
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 12 "scan1.l"
-{ECHO; ++word_count;}
+{fprintf(yyout,yytext); ++word_count;}
 	YY_BREAK
 case 4:
 *yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
@@ -758,7 +758,7 @@ case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
 #line 14 "scan1.l"
-{printf("\n"); ++line_count;}
+{fprintf(yyout,"\n"); ++line_count;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
@@ -1776,12 +1776,14 @@ void yyfree (void * ptr )
 #line 15 "scan1.l"
 
 int yywrap(){
-  printf("Number of words: %d\n", word_count);
-  printf("Number of lines: %d\n", line_count);
+  fprintf(yyout,"Number of words: %d\n", word_count);
+  fprintf(yyout,"Number of lines: %d\n", line_count);
   return 1;
 }
 int main(int argc, char **argv){
   yyin = fopen(argv[1], "r");
+  yyout = fopen("results1", "w");
   yylex();
+  fclose(yyout);
 }
 
