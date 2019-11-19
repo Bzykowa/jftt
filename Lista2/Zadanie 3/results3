@@ -23,14 +23,13 @@ int main(int argc, const char* argv)
     printf("/* foo bar");
     
 
-        baz();
+    
+    baz();
     
 
-/\
 
-    foo();
+    baz();
 
 
     return 1;
 }
-

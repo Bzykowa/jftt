@@ -9,12 +9,13 @@ bool doc = false;
 %%
 "\"".*"\""  fprintf(yyout, yytext);
 "<".*">" fprintf(yyout, yytext);
-"///".*"\\\n".*"\n" {if(doc) {fprintf(yyout, yytext);}}
-"//!".*"\\\n".*"\n" {if(doc) {fprintf(yyout, yytext);}}
-"//".*"\\\n".*"\n"
+"///".*(\\\n.*)+ {if(doc) {fprintf(yyout, yytext);}}
+"//!".*(\\\n.*)+ {if(doc) {fprintf(yyout, yytext);}}
+"//".*(\\\n.*)+
 "///".* {if(doc) {fprintf(yyout, yytext);}}
 "//!".* {if(doc) {fprintf(yyout, yytext);}}
 "//".*
+"/"(\\\n.*)*
 "/**"([^*]|\*+[^*/])*"*/"  {if(doc) {fprintf(yyout, yytext);}}
 "/*!"([^*]|\*+[^*/])*"*/"  {if(doc) {fprintf(yyout, yytext);}}
 "/*"([^*]|\*+[^*/])*"*/"
