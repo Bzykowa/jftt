@@ -18,9 +18,9 @@
 /* Bison declarations. */
 %define api.value.type {int}
 %token NUM RT_BR LT_BR
-%right POW
-%left MULT DIV MOD
 %left PLUS MINUS
+%left MULT DIV MOD
+%right POW
 %precedence NEG
 %token EOL ERROR
 
@@ -63,8 +63,9 @@ term: term MULT factor       { $$ = $1 * $3; strcat(onp,"* "); }
     | factor
 ;
 
-factor:  NUM             { $$ = $1; char *s; sprintf(s, "%d", $1); strcat(onp,s); strcat(onp," ");}
+factor:  NUM                { $$ = $1; char *s; sprintf(s, "%d", $1); strcat(onp,s); strcat(onp," ");}
         | MINUS NUM    { $$ = -$2;  strcat(onp,"-"); char *s; sprintf(s, "%d", $2); strcat(onp,s); strcat(onp, " ");}
+        | MINUS LT_BR exp RT_BR   { $$ = -$3; strcat(onp,"~ ");}
         | LT_BR exp RT_BR   { $$ = $2; }
 ;
 
